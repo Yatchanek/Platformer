@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://dx73yjcnavc52"]
+
+[ext_resource type="Script" path="res://scripts/lever.gd" id="1_4yk32"]
+[ext_resource type="Texture2D" uid="uid://brokmcepr26nm" path="res://graphics/spritesheets/lever.png" id="2_cfojr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iff8d"]
+size = Vector2(15, 19)
+
+[node name="Lever" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("1_4yk32")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -9.5)
+shape = SubResource("RectangleShape2D_iff8d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_cfojr")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -76.5
+offset_top = -64.0
+offset_right = 76.5
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

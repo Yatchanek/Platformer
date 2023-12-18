@@ -1,0 +1,148 @@
+[gd_scene load_steps=16 format=3 uid="uid://3qrm7uda1j8m"]
+
+[ext_resource type="Script" path="res://scripts/crusher.gd" id="1_m33hj"]
+[ext_resource type="Texture2D" uid="uid://bdpo4fwlqjd3i" path="res://graphics/spritesheets/crusher.png" id="2_2iwhx"]
+[ext_resource type="PackedScene" uid="uid://dhber54gts68q" path="res://scenes/attack_box.tscn" id="3_g1pdb"]
+[ext_resource type="Texture2D" uid="uid://ddkk0ky8hoefx" path="res://graphics/environment/dust.png" id="4_trocd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5hdb"]
+size = Vector2(46, 37)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7h27"]
+resource_local_to_scene = true
+size = Vector2(42, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bie5t"]
+size = Vector2(46, 80)
+
+[sub_resource type="Animation" id="Animation_6j0u6"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_3kb2r"]
+resource_name = "Shake"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 2), Vector2(0, 0), Vector2(0, 3), Vector2(0, 1), Vector2(0, 0), Vector2(0, 4), Vector2(0, 2), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_evkla"]
+_data = {
+"RESET": SubResource("Animation_6j0u6"),
+"Shake": SubResource("Animation_3kb2r")
+}
+
+[sub_resource type="Gradient" id="Gradient_e03km"]
+offsets = PackedFloat32Array(0, 0.626582, 1)
+colors = PackedColorArray(0.93845, 0.93845, 0.93845, 1, 0.631373, 0.631373, 0.631373, 1, 0.627451, 0.627451, 0.627451, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t73rp"]
+gradient = SubResource("Gradient_e03km")
+
+[sub_resource type="Curve" id="Curve_rrc5w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.550265, 0.863158), -1.28731, -1.28731, 0, 0, Vector2(0.984127, 0.347368), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_lh1b8"]
+curve = SubResource("Curve_rrc5w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xc5qh"]
+resource_local_to_scene = true
+emission_shape = 3
+emission_box_extents = Vector3(24, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 90.0
+gravity = Vector3(0, 98, 0)
+initial_velocity_min = 64.0
+initial_velocity_max = 128.0
+angular_velocity_max = 20.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_max = 180.0
+scale_min = 0.1
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_lh1b8")
+color_ramp = SubResource("GradientTexture1D_t73rp")
+
+[node name="Crusher" type="AnimatableBody2D"]
+collision_layer = 256
+collision_mask = 8
+script = ExtResource("1_m33hj")
+height = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(24, 20)
+shape = SubResource("RectangleShape2D_d5hdb")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Head" type="Sprite2D" parent="Body"]
+z_index = -1
+texture_filter = 1
+texture = ExtResource("2_2iwhx")
+centered = false
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(192, 16, 48, 32)
+
+[node name="BodySegment" type="Sprite2D" parent="Body"]
+z_index = -2
+texture_filter = 1
+position = Vector2(0, -16)
+texture = ExtResource("2_2iwhx")
+centered = false
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(192, 0, 48, 16)
+
+[node name="AttackBox" parent="." node_paths=PackedStringArray("attacker") instance=ExtResource("3_g1pdb")]
+collision_layer = 6
+attacker = NodePath("..")
+
+[node name="CollisionShape2D" parent="AttackBox" index="0"]
+position = Vector2(24, 8)
+shape = SubResource("RectangleShape2D_u7h27")
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+position = Vector2(24, 80)
+shape = SubResource("RectangleShape2D_bie5t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_evkla")
+}
+
+[node name="DelayTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(24, 16)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_xc5qh")
+texture = ExtResource("4_trocd")
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.85
+
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="DelayTimer" to="." method="_on_delay_timer_timeout"]
+
+[editable path="AttackBox"]

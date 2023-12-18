@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ha8b36bvfouy"]
+
+[ext_resource type="Texture2D" uid="uid://pldr2nn7w7ok" path="res://graphics/ui/status_bar.png" id="1_8e5t8"]
+[ext_resource type="Texture2D" uid="uid://bsd5pgy3xrydr" path="res://graphics/ui/status_bar_progress.png" id="2_m570r"]
+[ext_resource type="Script" path="res://scripts/status_bar.gd" id="3_cq1b4"]
+
+[node name="StatusBar" type="TextureProgressBar"]
+texture_filter = 1
+texture_progress = ExtResource("2_m570r")
+tint_progress = Color(1, 0.415686, 0.34902, 0.941176)
+script = ExtResource("3_cq1b4")
+
+[node name="MainProgress" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_over = ExtResource("1_8e5t8")
+texture_progress = ExtResource("2_m570r")

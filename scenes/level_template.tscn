@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb4nnnlumx3eq"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_haud1"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_blhah"]
+distance = -512.0
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_haud1")
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Pickups" type="Node2D" parent="."]
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Hazards" type="Node2D" parent="."]
+
+[node name="InfoBoards" type="Node2D" parent="."]
+
+[node name="Lights" type="Node2D" parent="."]
+
+[node name="BottomBorder" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomBorder"]
+shape = SubResource("WorldBoundaryShape2D_blhah")
+
+[node name="PlayerSpawnSpot" type="Marker2D" parent="."]
+position = Vector2(64, 360)
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="body_entered" from="BottomBorder" to="." method="_on_bottom_border_body_entered"]

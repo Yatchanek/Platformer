@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmwe3em7ukh0w"]
+
+[ext_resource type="Script" path="res://scripts/info_board.gd" id="1_0f26x"]
+[ext_resource type="FontFile" uid="uid://dxr5hklbtmwil" path="res://fonts/m5x7 Daniel Linssen.ttf" id="2_731u3"]
+[ext_resource type="Texture2D" uid="uid://t6f10m62ynds" path="res://graphics/environment/info_board.png" id="2_n5pv3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w65s6"]
+size = Vector2(22, 29)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wcl6n"]
+line_spacing = 0.0
+font = ExtResource("2_731u3")
+font_color = Color(1, 1, 0.054902, 1)
+outline_size = 3
+outline_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+shadow_size = 0
+
+[node name="InfoBoard" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("1_0f26x")
+description = "Hello mighty adventurer, welcome to this funny, yet very shitty game."
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14.5)
+shape = SubResource("RectangleShape2D_w65s6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("2_n5pv3")
+offset = Vector2(0, -15)
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(256, 0)
+offset_right = 256.0
+offset_bottom = 13.0
+size_flags_horizontal = 3
+label_settings = SubResource("LabelSettings_wcl6n")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

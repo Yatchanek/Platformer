@@ -1,0 +1,123 @@
+[gd_scene load_steps=13 format=3 uid="uid://js7taijnkinn"]
+
+[ext_resource type="Script" path="res://scripts/enemies/bat.gd" id="1_yw483"]
+[ext_resource type="PackedScene" uid="uid://dhber54gts68q" path="res://scenes/attack_box.tscn" id="2_pnl1o"]
+[ext_resource type="PackedScene" uid="uid://bayvr4tfkvhog" path="res://scenes/hurtbox.tscn" id="3_8ia2v"]
+[ext_resource type="Texture2D" uid="uid://d4gb35f2rvvky" path="res://graphics/spritesheets/Bat_Full by Admurin.png" id="4_evkk4"]
+[ext_resource type="Script" path="res://scripts/fsm.gd" id="5_t4ga8"]
+[ext_resource type="Script" path="res://scripts/enemies/bat_fly_state.gd" id="6_rgl18"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k32k2"]
+size = Vector2(7, 9.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y4ylj"]
+resource_local_to_scene = true
+size = Vector2(5, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v7jlw"]
+resource_local_to_scene = true
+size = Vector2(14, 10)
+
+[sub_resource type="Animation" id="Animation_pxl51"]
+resource_name = "Fly"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_x05d6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_reyai"]
+_data = {
+"Fly": SubResource("Animation_pxl51"),
+"RESET": SubResource("Animation_x05d6")
+}
+
+[node name="Bat" type="CharacterBody2D"]
+collision_layer = 16
+script = ExtResource("1_yw483")
+speed = 64
+hp = 1.0
+max_radius = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.75)
+shape = SubResource("RectangleShape2D_k32k2")
+
+[node name="Pivot" type="Marker2D" parent="."]
+
+[node name="WallDetectors" type="Marker2D" parent="Pivot"]
+
+[node name="Up" type="RayCast2D" parent="Pivot/WallDetectors"]
+target_position = Vector2(0, -24)
+
+[node name="Down" type="RayCast2D" parent="Pivot/WallDetectors"]
+target_position = Vector2(0, 24)
+
+[node name="Right" type="RayCast2D" parent="Pivot/WallDetectors"]
+target_position = Vector2(24, 0)
+
+[node name="AttackBox" parent="Pivot" node_paths=PackedStringArray("attacker") instance=ExtResource("2_pnl1o")]
+attacker = NodePath("../..")
+
+[node name="CollisionShape2D" parent="Pivot/AttackBox" index="0"]
+position = Vector2(6.5, -1)
+shape = SubResource("RectangleShape2D_y4ylj")
+
+[node name="Hurtbox" parent="Pivot" node_paths=PackedStringArray("target") instance=ExtResource("3_8ia2v")]
+target = NodePath("../..")
+
+[node name="CollisionShape2D" parent="Pivot/Hurtbox" index="0"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_v7jlw")
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot"]
+texture_filter = 1
+texture = ExtResource("4_evkk4")
+offset = Vector2(0, -2)
+hframes = 5
+vframes = 5
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Pivot/Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_reyai")
+}
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state", "animator", "actor", "pivot")]
+script = ExtResource("5_t4ga8")
+current_state = NodePath("FlyState")
+animator = NodePath("../AnimationPlayer")
+actor = NodePath("..")
+pivot = NodePath("../Pivot")
+
+[node name="FlyState" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("6_rgl18")
+
+[editable path="Pivot/AttackBox"]
+[editable path="Pivot/Hurtbox"]

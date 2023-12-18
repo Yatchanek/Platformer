@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3 uid="uid://diwmm4s004qg7"]
+
+[ext_resource type="Script" path="res://scripts/inventory_ui.gd" id="1_ru4gs"]
+[ext_resource type="FontFile" uid="uid://ovhqspbit3ou" path="res://fonts/m6x11 Daniel LInssen.ttf" id="2_niw7d"]
+[ext_resource type="PackedScene" uid="uid://couglqbak4wag" path="res://scenes/inventory_slot.tscn" id="2_sqqa0"]
+[ext_resource type="Texture2D" uid="uid://6bux7lp8bbmf" path="res://graphics/ui/trash_can.png" id="5_ber3h"]
+[ext_resource type="FontFile" uid="uid://dxr5hklbtmwil" path="res://fonts/m5x7 Daniel Linssen.ttf" id="5_xnydv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11boe"]
+bg_color = Color(0.352941, 0.192157, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_8lq6l"]
+font = ExtResource("2_niw7d")
+
+[sub_resource type="LabelSettings" id="LabelSettings_cjp1b"]
+font = ExtResource("5_xnydv")
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("1_ru4gs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -140.0
+offset_bottom = 156.0
+grow_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="Background" type="PanelContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_11boe")
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/MarginContainer/Background"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="InventorySlots" type="GridContainer" parent="VBoxContainer/MarginContainer/Background/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="InventorySlot" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot4" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot5" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot6" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot7" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot8" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot9" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot10" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot11" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+
+[node name="InventorySlot12" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots" instance=ExtResource("2_sqqa0")]
+layout_mode = 2
+is_trash_bin = true
+
+[node name="ItemTexture" parent="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots/InventorySlot12" index="0"]
+visible = true
+texture = ExtResource("5_ber3h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="ItemNameLabel" type="Label" parent="VBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Health Potion"
+label_settings = SubResource("LabelSettings_8lq6l")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Restores your health"
+label_settings = SubResource("LabelSettings_cjp1b")
+horizontal_alignment = 1
+
+[editable path="VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots/InventorySlot12"]

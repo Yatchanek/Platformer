@@ -1,0 +1,304 @@
+[gd_scene load_steps=20 format=3 uid="uid://rut1njv5tspv"]
+
+[ext_resource type="PackedScene" uid="uid://uq4e4sun6kp1" path="res://scenes/basic_enemy_template.tscn" id="1_f13xp"]
+[ext_resource type="Script" path="res://scripts/archer.gd" id="2_d0rjq"]
+[ext_resource type="Texture2D" uid="uid://coeh82td40erh" path="res://graphics/spritesheets/archer spritesheet.png" id="3_8ukoo"]
+[ext_resource type="Script" path="res://scripts/enemies/archer_idle_state.gd" id="4_d04gr"]
+[ext_resource type="Script" path="res://scripts/enemies/basic_die_state.gd" id="5_htl1i"]
+[ext_resource type="Script" path="res://scripts/enemies/basic_enemy_jump_state.gd" id="5_i7cgs"]
+[ext_resource type="Script" path="res://scripts/enemies/archer_attack_state.gd" id="6_7k02b"]
+[ext_resource type="Script" path="res://scripts/enemies/archer_run_state.gd" id="7_63g56"]
+[ext_resource type="Script" path="res://scripts/enemies/archer_hurt_state.gd" id="8_l63to"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljxu8"]
+resource_local_to_scene = true
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uf76i"]
+resource_local_to_scene = true
+size = Vector2(12, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4pya"]
+resource_local_to_scene = true
+size = Vector2(12, 42)
+
+[sub_resource type="Animation" id="Animation_ap6ty"]
+resource_name = "Attack"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27, 28, 29, 30]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire_arrow"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_0deoa"]
+resource_name = "Die"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14, 15]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Hurtbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ewlaw"]
+resource_name = "Hurt"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Hurtbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_toagy"]
+resource_name = "Idle"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43]
+}
+
+[sub_resource type="Animation" id="Animation_rtied"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [40]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Hurtbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_3fa1e"]
+resource_name = "Run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4w5gx"]
+_data = {
+"Attack": SubResource("Animation_ap6ty"),
+"Die": SubResource("Animation_0deoa"),
+"Hurt": SubResource("Animation_ewlaw"),
+"Idle": SubResource("Animation_toagy"),
+"RESET": SubResource("Animation_rtied"),
+"Run": SubResource("Animation_3fa1e")
+}
+
+[node name="Archer" instance=ExtResource("1_f13xp")]
+script = ExtResource("2_d0rjq")
+SPEED = 192
+max_hp = 8
+current_damage = 3.0
+min_safe_distance = 64.0
+sprite_height = 35
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_ljxu8")
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+texture = ExtResource("3_8ukoo")
+offset = Vector2(0, -16)
+hframes = 8
+vframes = 8
+frame = 40
+
+[node name="GapDetector" parent="Pivot" index="1"]
+position = Vector2(15, -3)
+
+[node name="BackWallDetector" type="RayCast2D" parent="Pivot" index="4"]
+position = Vector2(0, -20)
+target_position = Vector2(-64, 0)
+
+[node name="BackGapDetector" type="RayCast2D" parent="Pivot" index="5"]
+position = Vector2(-32, -4)
+target_position = Vector2(0, 16)
+
+[node name="AttackBox" parent="Pivot" index="6" node_paths=PackedStringArray("attacker")]
+attacker = NodePath("../..")
+
+[node name="CollisionShape2D" parent="Pivot/AttackBox" index="0"]
+shape = SubResource("RectangleShape2D_uf76i")
+
+[node name="CollisionShape2D" parent="Pivot/Hurtbox" index="0"]
+shape = SubResource("RectangleShape2D_r4pya")
+
+[node name="Eyes" type="Marker2D" parent="Pivot" index="8"]
+position = Vector2(-1, -26)
+
+[node name="PlayerDetector" type="RayCast2D" parent="Pivot/Eyes" index="0"]
+target_position = Vector2(272, 0)
+collision_mask = 9
+
+[node name="PlayerDetector2" type="RayCast2D" parent="Pivot/Eyes" index="1"]
+rotation = 0.0436332
+target_position = Vector2(272, 0)
+collision_mask = 9
+
+[node name="PlayerDetector3" type="RayCast2D" parent="Pivot/Eyes" index="2"]
+position = Vector2(0, 12)
+rotation = 0.0872665
+target_position = Vector2(270.106, -10.5815)
+collision_mask = 9
+
+[node name="ArrowSpawnPosition" type="Marker2D" parent="Pivot" index="9"]
+position = Vector2(22, -25)
+
+[node name="FiniteStateMachine" parent="." index="2" node_paths=PackedStringArray("current_state")]
+current_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="FiniteStateMachine" index="0"]
+script = ExtResource("4_d04gr")
+
+[node name="JumpState" type="Node" parent="FiniteStateMachine" index="1"]
+script = ExtResource("5_i7cgs")
+
+[node name="DieState" type="Node" parent="FiniteStateMachine" index="2"]
+script = ExtResource("5_htl1i")
+
+[node name="AttackState" type="Node" parent="FiniteStateMachine" index="3"]
+script = ExtResource("6_7k02b")
+
+[node name="RunState" type="Node" parent="FiniteStateMachine" index="4"]
+script = ExtResource("7_63g56")
+
+[node name="HurtState" type="Node" parent="FiniteStateMachine" index="5"]
+script = ExtResource("8_l63to")
+
+[node name="RestTimer" parent="." index="3"]
+wait_time = 1.0
+
+[node name="HealthBar" parent="." index="5"]
+offset_top = -46.0
+offset_bottom = -40.0
+
+[node name="VisibleOnScreenEnabler2D" parent="." index="6"]
+position = Vector2(-100, -10)
+rect = Rect2(0, 0, 200, 10)
+
+[node name="AnimationPlayer" parent="." index="7"]
+libraries = {
+"": SubResource("AnimationLibrary_4w5gx")
+}
+
+[editable path="Pivot/AttackBox"]

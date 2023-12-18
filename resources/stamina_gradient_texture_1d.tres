@@ -1,0 +1,7 @@
+[gd_resource type="GradientTexture1D" load_steps=2 format=3 uid="uid://c20aiwb7dr165"]
+
+[ext_resource type="Gradient" uid="uid://4ni44bbdyngk" path="res://resources/stamina_gradient.tres" id="1_3rmpa"]
+
+[resource]
+resource_local_to_scene = true
+gradient = ExtResource("1_3rmpa")

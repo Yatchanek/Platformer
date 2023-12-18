@@ -1,0 +1,314 @@
+[gd_scene load_steps=24 format=3 uid="uid://bambwonrkfcq8"]
+
+[ext_resource type="PackedScene" uid="uid://uq4e4sun6kp1" path="res://scenes/basic_enemy_template.tscn" id="1_psjfo"]
+[ext_resource type="Script" path="res://scripts/enemies/skull_wolf.gd" id="2_4ludu"]
+[ext_resource type="Texture2D" uid="uid://rnhkda7cdluh" path="res://graphics/spritesheets/SkullWolf by Atari Boy.png" id="3_w0s5c"]
+[ext_resource type="Script" path="res://scripts/enemies/skull_wolf_idle_state.gd" id="4_6glh3"]
+[ext_resource type="Script" path="res://scripts/enemies/skull_wolf_patrol_state.gd" id="5_sxrui"]
+[ext_resource type="Script" path="res://scripts/enemies/skull_wolf_chase_state.gd" id="6_1i2h1"]
+[ext_resource type="Script" path="res://scripts/enemies/skull_wolf_attack_state.gd" id="6_xc6wh"]
+[ext_resource type="Script" path="res://scripts/enemies/skull_wolf_hurt_state.gd" id="7_3x5gy"]
+[ext_resource type="Script" path="res://scripts/enemies/basic_die_state.gd" id="9_m38fi"]
+[ext_resource type="Script" path="res://scripts/enemies/skull_wolf_fall_state.gd" id="10_552li"]
+[ext_resource type="Script" path="res://scripts/enemies/skull_wolf_jump_state.gd" id="10_kf3pq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rfive"]
+resource_local_to_scene = true
+size = Vector2(28, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g6nwn"]
+resource_local_to_scene = true
+size = Vector2(24, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jb2gm"]
+resource_local_to_scene = true
+size = Vector2(43, 25)
+
+[sub_resource type="Animation" id="Animation_d6vp7"]
+resource_name = "Attack"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 7, 8, 9, 10, 11]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/AttackBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_hyd1s"]
+resource_name = "Die"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [21, 22, 23, 24, 25, 26, 27]
+}
+
+[sub_resource type="Animation" id="Animation_m1v3c"]
+resource_name = "Fall"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_sy70o"]
+resource_name = "Hurt"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Hurtbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_lr82e"]
+resource_name = "Idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_omaht"]
+resource_name = "Jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_onj6o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/AttackBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Hurtbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_4ef8h"]
+resource_name = "Run"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xbyj1"]
+_data = {
+"Attack": SubResource("Animation_d6vp7"),
+"Die": SubResource("Animation_hyd1s"),
+"Fall": SubResource("Animation_m1v3c"),
+"Hurt": SubResource("Animation_sy70o"),
+"Idle": SubResource("Animation_lr82e"),
+"Jump": SubResource("Animation_omaht"),
+"RESET": SubResource("Animation_onj6o"),
+"Run": SubResource("Animation_4ef8h")
+}
+
+[node name="SkullWolf" instance=ExtResource("1_psjfo")]
+floor_max_angle = 1.0472
+floor_snap_length = 10.1
+script = ExtResource("2_4ludu")
+patrol_speed = 96
+chase_speed = 160
+SPEED = 160
+hp = 7.0
+max_hp = 7
+damage = 2.0
+max_overrun_distance = 96.0
+sprite_height = 25
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(1, -6)
+shape = SubResource("RectangleShape2D_rfive")
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+texture = ExtResource("3_w0s5c")
+offset = Vector2(0, -32)
+flip_h = true
+hframes = 7
+vframes = 4
+
+[node name="GapDetector" parent="Pivot" index="1"]
+position = Vector2(24, -2)
+target_position = Vector2(0, 19)
+
+[node name="WallDetector" parent="Pivot" index="2"]
+target_position = Vector2(34, -1)
+
+[node name="PlayerDetector" parent="Pivot" index="3"]
+target_position = Vector2(29, 0)
+
+[node name="Vision" type="RayCast2D" parent="Pivot" index="4"]
+position = Vector2(12, -12)
+target_position = Vector2(192, 0)
+collision_mask = 9
+
+[node name="AttackBox" parent="Pivot" index="5" node_paths=PackedStringArray("attacker")]
+attacker = NodePath("../..")
+
+[node name="CollisionShape2D" parent="Pivot/AttackBox" index="0"]
+position = Vector2(18, -24)
+shape = SubResource("RectangleShape2D_g6nwn")
+
+[node name="CollisionShape2D" parent="Pivot/Hurtbox" index="0"]
+position = Vector2(3.5, -12.5)
+shape = SubResource("RectangleShape2D_jb2gm")
+
+[node name="FiniteStateMachine" parent="." index="2" node_paths=PackedStringArray("current_state")]
+current_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="FiniteStateMachine" index="0"]
+script = ExtResource("4_6glh3")
+
+[node name="PatrolState" type="Node" parent="FiniteStateMachine" index="1"]
+script = ExtResource("5_sxrui")
+
+[node name="ChaseState" type="Node" parent="FiniteStateMachine" index="2"]
+script = ExtResource("6_1i2h1")
+
+[node name="AttackState" type="Node" parent="FiniteStateMachine" index="3"]
+script = ExtResource("6_xc6wh")
+
+[node name="HurtState" type="Node" parent="FiniteStateMachine" index="4"]
+script = ExtResource("7_3x5gy")
+
+[node name="DieState" type="Node" parent="FiniteStateMachine" index="5"]
+script = ExtResource("9_m38fi")
+
+[node name="JumpState" type="Node" parent="FiniteStateMachine" index="6"]
+script = ExtResource("10_kf3pq")
+
+[node name="FallState" type="Node" parent="FiniteStateMachine" index="7"]
+script = ExtResource("10_552li")
+
+[node name="RestTimer" parent="." index="3"]
+wait_time = 1.0
+
+[node name="InvulTimer" parent="." index="4"]
+wait_time = 0.15
+
+[node name="HealthBar" parent="." index="5"]
+offset_top = -40.0
+offset_bottom = -34.0
+
+[node name="VisibleOnScreenEnabler2D" parent="." index="6"]
+position = Vector2(0, -10)
+scale = Vector2(10.4, 1)
+
+[node name="AnimationPlayer" parent="." index="7"]
+libraries = {
+"": SubResource("AnimationLibrary_xbyj1")
+}
+
+[connection signal="died" from="FiniteStateMachine/DieState" to="." method="_on_die_state_died"]
+
+[editable path="Pivot/AttackBox"]

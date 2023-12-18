@@ -1,0 +1,327 @@
+[gd_scene load_steps=22 format=3 uid="uid://dvbut8gnuy362"]
+
+[ext_resource type="PackedScene" uid="uid://uq4e4sun6kp1" path="res://scenes/basic_enemy_template.tscn" id="1_no13n"]
+[ext_resource type="Script" path="res://scripts/enemies/nightborne.gd" id="2_ivauf"]
+[ext_resource type="Texture2D" uid="uid://diwpanll5105u" path="res://graphics/spritesheets/NightBorne creativekind.png" id="3_dvqkn"]
+[ext_resource type="Script" path="res://scripts/enemies/nighborne_idle_state.gd" id="4_86qsi"]
+[ext_resource type="Script" path="res://scripts/enemies/nightborne_teleport_state.gd" id="5_gmbfg"]
+[ext_resource type="Script" path="res://scripts/enemies/nightborne_attack_state.gd" id="6_0mn7u"]
+[ext_resource type="Script" path="res://scripts/enemies/nightborne_run_state.gd" id="7_wxklo"]
+[ext_resource type="Script" path="res://scripts/enemies/nightborne_hurt_state.gd" id="8_03m68"]
+[ext_resource type="Script" path="res://scripts/enemies/basic_die_state.gd" id="9_l8wy1"]
+[ext_resource type="Script" path="res://scripts/enemies/basic_enemy_jump_state.gd" id="10_y77ck"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0oadc"]
+resource_local_to_scene = true
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eirst"]
+resource_local_to_scene = true
+size = Vector2(10, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iqgce"]
+resource_local_to_scene = true
+size = Vector2(24, 29)
+
+[sub_resource type="Animation" id="Animation_xu4y3"]
+resource_name = "Attack"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/AttackBox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 57]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/AttackBox/CollisionShape2D:shape:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(26, 47)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/AttackBox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(35, -24)]
+}
+
+[sub_resource type="Animation" id="Animation_d5k52"]
+resource_name = "Die"
+length = 2.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114]
+}
+
+[sub_resource type="Animation" id="Animation_wqlcn"]
+resource_name = "Hurt"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [69, 70, 71, 72, 73]
+}
+
+[sub_resource type="Animation" id="Animation_ctbmc"]
+resource_name = "Idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_u8ard"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/AttackBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/AttackBox/CollisionShape2D:shape:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 26)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/AttackBox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(34, -17)]
+}
+
+[sub_resource type="Animation" id="Animation_dii0k"]
+resource_name = "Run"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [23, 24, 25, 26, 27, 28]
+}
+
+[sub_resource type="Animation" id="Animation_jpo63"]
+resource_name = "Teleport"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [105, 106, 107, 108, 109, 110, 111, 112, 113, 114]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qjcpi"]
+_data = {
+"Attack": SubResource("Animation_xu4y3"),
+"Die": SubResource("Animation_d5k52"),
+"Hurt": SubResource("Animation_wqlcn"),
+"Idle": SubResource("Animation_ctbmc"),
+"RESET": SubResource("Animation_u8ard"),
+"Run": SubResource("Animation_dii0k"),
+"Teleport": SubResource("Animation_jpo63")
+}
+
+[node name="Nightborne" node_paths=PackedStringArray("teleport_spots") instance=ExtResource("1_no13n")]
+script = ExtResource("2_ivauf")
+teleport_spots = []
+SPEED = 192
+max_hp = 10
+min_safe_distance = 32.0
+max_overrun_distance = 96.0
+power = 1.25
+evasion_rate_while_attacking = 0.25
+attack_anim_speed = 1.25
+sprite_height = 34
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_0oadc")
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+texture = ExtResource("3_dvqkn")
+offset = Vector2(0, -24)
+hframes = 23
+vframes = 5
+
+[node name="WallDetector" parent="Pivot" index="2"]
+target_position = Vector2(25, 0)
+
+[node name="PlayerDetector" parent="Pivot" index="3"]
+target_position = Vector2(47, 0)
+
+[node name="AttackBox" parent="Pivot" index="4" node_paths=PackedStringArray("attacker")]
+attacker = NodePath("../..")
+
+[node name="CollisionShape2D" parent="Pivot/AttackBox" index="0"]
+position = Vector2(34, -17)
+shape = SubResource("RectangleShape2D_eirst")
+
+[node name="CollisionShape2D" parent="Pivot/Hurtbox" index="0"]
+position = Vector2(2, -14.5)
+shape = SubResource("RectangleShape2D_iqgce")
+
+[node name="Eyes" type="Marker2D" parent="Pivot" index="6"]
+position = Vector2(0, -15)
+
+[node name="Vision" type="RayCast2D" parent="Pivot/Eyes" index="0"]
+position = Vector2(-8, 0)
+target_position = Vector2(288, 0)
+collision_mask = 9
+
+[node name="Vision3" type="RayCast2D" parent="Pivot/Eyes" index="1"]
+position = Vector2(-8, 7)
+target_position = Vector2(288, 0)
+collision_mask = 9
+
+[node name="FiniteStateMachine" parent="." index="2" node_paths=PackedStringArray("current_state")]
+current_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="FiniteStateMachine" index="0"]
+script = ExtResource("4_86qsi")
+
+[node name="TeleportState" type="Node" parent="FiniteStateMachine" index="1"]
+script = ExtResource("5_gmbfg")
+
+[node name="AttackState" type="Node" parent="FiniteStateMachine" index="2"]
+script = ExtResource("6_0mn7u")
+
+[node name="ChaseState" type="Node" parent="FiniteStateMachine" index="3"]
+script = ExtResource("7_wxklo")
+
+[node name="HurtState" type="Node" parent="FiniteStateMachine" index="4"]
+script = ExtResource("8_03m68")
+
+[node name="DieState" type="Node" parent="FiniteStateMachine" index="5"]
+script = ExtResource("9_l8wy1")
+
+[node name="JumpState" type="Node" parent="FiniteStateMachine" index="6"]
+script = ExtResource("10_y77ck")
+
+[node name="TeleportTimer" type="Timer" parent="." index="3"]
+wait_time = 5.0
+one_shot = true
+
+[node name="RestTimer" parent="." index="4"]
+wait_time = 0.25
+
+[node name="TargetLostTimer" type="Timer" parent="." index="5"]
+wait_time = 1.5
+
+[node name="InvulTimer" parent="." index="6"]
+wait_time = 0.15
+
+[node name="HealthBar" parent="." index="7"]
+visible = false
+offset_top = -45.0
+offset_bottom = -39.0
+
+[node name="VisibleOnScreenEnabler2D" parent="." index="8"]
+position = Vector2(-80, -10)
+rect = Rect2(0, 0, 160, 10)
+
+[node name="AnimationPlayer" parent="." index="9"]
+libraries = {
+"": SubResource("AnimationLibrary_qjcpi")
+}
+
+[connection signal="died" from="FiniteStateMachine/DieState" to="." method="_on_basic_die_state_died"]
+
+[editable path="Pivot/AttackBox"]

@@ -1,0 +1,1 @@
+extends AnimatableBody2D

@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://couglqbak4wag"]
+
+[ext_resource type="Texture2D" uid="uid://d3t3xn7ebh115" path="res://graphics/spritesheets/pickups.png" id="1_1eyct"]
+[ext_resource type="Texture2D" uid="uid://b63gtnil6kfu2" path="res://graphics/ui/inventory_slot.png" id="1_m368e"]
+[ext_resource type="Script" path="res://scripts/inventory_slot.gd" id="2_m83tk"]
+[ext_resource type="FontFile" uid="uid://ckkyqi7f774ng" path="res://fonts/m3x6 Daniel Linssen.ttf" id="4_w7ekg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmni3"]
+resource_local_to_scene = true
+atlas = ExtResource("1_1eyct")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ald0s"]
+line_spacing = 0.0
+font = ExtResource("4_w7ekg")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oehyh"]
+bg_color = Color(0.458824, 0.560784, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_mkdy6"]
+line_spacing = 0.0
+font = ExtResource("4_w7ekg")
+
+[node name="InventorySlot" type="TextureRect"]
+show_behind_parent = true
+texture_filter = 1
+custom_minimum_size = Vector2(24, 24)
+offset_right = 24.0
+offset_bottom = 24.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+texture = ExtResource("1_m368e")
+expand_mode = 3
+script = ExtResource("2_m83tk")
+
+[node name="ItemTexture" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 23.0
+offset_bottom = 23.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_gmni3")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0
+offset_top = -14.0
+offset_right = -2.0
+offset_bottom = -1.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 8
+text = "1"
+label_settings = SubResource("LabelSettings_ald0s")
+horizontal_alignment = 2
+vertical_alignment = 2
+justification_flags = 3
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oehyh")
+text = "1"
+label_settings = SubResource("LabelSettings_mkdy6")
+horizontal_alignment = 1
+justification_flags = 0

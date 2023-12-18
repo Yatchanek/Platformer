@@ -1,0 +1,55 @@
+[gd_scene load_steps=10 format=3 uid="uid://c8loqg744bs1h"]
+
+[ext_resource type="Texture2D" uid="uid://ddkk0ky8hoefx" path="res://graphics/environment/dust.png" id="1_8rq7u"]
+[ext_resource type="Script" path="res://scripts/one_time_effect.gd" id="2_rrdw2"]
+
+[sub_resource type="Gradient" id="Gradient_dfayd"]
+offsets = PackedFloat32Array(0, 0.335484, 0.812903, 1)
+colors = PackedColorArray(0.868985, 0.868985, 0.868985, 1, 0.860369, 0.860369, 0.860369, 1, 0.843184, 0.843184, 0.843184, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_htyd0"]
+gradient = SubResource("Gradient_dfayd")
+
+[sub_resource type="Gradient" id="Gradient_50a3o"]
+offsets = PackedFloat32Array(0, 0.283871, 0.858065, 1)
+colors = PackedColorArray(0.843184, 0.843184, 0.843184, 1, 0.907942, 0.907942, 0.907942, 1, 0.981754, 0.981754, 0.981754, 0.198198, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bo31i"]
+gradient = SubResource("Gradient_50a3o")
+
+[sub_resource type="Curve" id="Curve_8jaav"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.747312, 0.8), -1.12579, -1.12579, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vf7u3"]
+curve = SubResource("Curve_8jaav")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qtj3c"]
+emission_shape = 3
+emission_box_extents = Vector3(5, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 90.0
+gravity = Vector3(0, 98, 0)
+initial_velocity_min = 35.0
+initial_velocity_max = 70.0
+angular_velocity_max = 150.86
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_max = 10.0
+angle_max = 720.0
+scale_min = 0.2
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_vf7u3")
+color_ramp = SubResource("GradientTexture1D_bo31i")
+color_initial_ramp = SubResource("GradientTexture1D_htyd0")
+
+[node name="Dust" type="GPUParticles2D"]
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_qtj3c")
+texture = ExtResource("1_8rq7u")
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("2_rrdw2")

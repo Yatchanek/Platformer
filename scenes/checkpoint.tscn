@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgeyiu02mqyyj"]
+
+[ext_resource type="Script" path="res://scripts/checkpoint.gd" id="1_55a81"]
+[ext_resource type="Texture2D" uid="uid://byj8trr4oe7rw" path="res://graphics/environment/lamp.png" id="2_4ap8q"]
+[ext_resource type="FontFile" uid="uid://dxr5hklbtmwil" path="res://fonts/m5x7 Daniel Linssen.ttf" id="3_a8tst"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utrjc"]
+size = Vector2(22, 57)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jk5n4"]
+line_spacing = 0.0
+font = ExtResource("3_a8tst")
+font_color = Color(1, 1, 0.0627451, 1)
+outline_size = 3
+outline_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[node name="Checkpoint" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("1_55a81")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28.5)
+shape = SubResource("RectangleShape2D_utrjc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+texture = ExtResource("2_4ap8q")
+offset = Vector2(0, -29)
+region_enabled = true
+region_rect = Rect2(0, 0, 23, 58)
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -84.0
+offset_top = -71.0
+offset_right = 84.0
+offset_bottom = -57.0
+text = "Press 'E' to activate checkpoint."
+label_settings = SubResource("LabelSettings_jk5n4")
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

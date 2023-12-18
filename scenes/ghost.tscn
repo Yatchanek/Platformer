@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjnyesaks10xc"]
+
+[ext_resource type="Texture2D" uid="uid://bbi4pd88ra6hm" path="res://graphics/spritesheets/forresta_ghost.png" id="1_xc2y0"]
+[ext_resource type="Script" path="res://scripts/ghost.gd" id="2_hdafo"]
+
+[node name="Ghost" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0)
+z_index = 2
+texture = ExtResource("1_xc2y0")
+offset = Vector2(0, -16)
+script = ExtResource("2_hdafo")

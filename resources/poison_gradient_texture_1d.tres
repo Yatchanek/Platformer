@@ -1,0 +1,6 @@
+[gd_resource type="GradientTexture1D" load_steps=2 format=3 uid="uid://cbt5q1avh65i5"]
+
+[ext_resource type="Gradient" uid="uid://nau1whwxfekr" path="res://resources/poison_gradient.tres" id="1_g4vdb"]
+
+[resource]
+gradient = ExtResource("1_g4vdb")

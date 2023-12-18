@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://8y76d42b6uht"]
+
+[ext_resource type="Script" path="res://scripts/forresta/sword_fireball.gd" id="1_mqmog"]
+[ext_resource type="Texture2D" uid="uid://bp7q8bjvfsmy1" path="res://graphics/fireball.png" id="2_u8khr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lbvgp"]
+radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x6ri7"]
+atlas = ExtResource("2_u8khr")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o58g"]
+atlas = ExtResource("2_u8khr")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awtnt"]
+atlas = ExtResource("2_u8khr")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0f70d"]
+atlas = ExtResource("2_u8khr")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h7xvm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x6ri7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o58g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awtnt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0f70d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="PlayerFireball" type="Area2D"]
+z_index = 1
+collision_layer = 0
+collision_mask = 17
+script = ExtResource("1_mqmog")
+is_exploding = true
+max_speed = 320.0
+acceleration = 320.0
+current_damage = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lbvgp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_h7xvm")
+autoplay = "default"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnngbdav37hmg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kd3pk"]
+resource_local_to_scene = true
+
+[node name="Projectile" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kd3pk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

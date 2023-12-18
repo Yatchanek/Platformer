@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy6sflhnsg22g"]
+
+[ext_resource type="Script" path="res://scripts/ladder.gd" id="1_tjw58"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wl0dp"]
+size = Vector2(16, 88)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ygpc"]
+size = Vector2(16, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7gq6"]
+size = Vector2(16, 4)
+
+[node name="Ladder" type="Node2D"]
+script = ExtResource("1_tjw58")
+
+[node name="LadderBody" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderBody"]
+position = Vector2(0, 68)
+shape = SubResource("RectangleShape2D_wl0dp")
+
+[node name="UpperBlock" type="StaticBody2D" parent="."]
+collision_layer = 129
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBlock"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_7ygpc")
+
+[node name="UpperCheck" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperCheck"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_y7gq6")
+
+[connection signal="body_entered" from="LadderBody" to="." method="_on_ladder_body_body_entered"]
+[connection signal="body_exited" from="LadderBody" to="." method="_on_ladder_body_body_exited"]
+[connection signal="body_entered" from="UpperCheck" to="." method="_on_upper_check_body_entered"]
+[connection signal="body_exited" from="UpperCheck" to="." method="_on_upper_check_body_exited"]

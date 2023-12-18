@@ -1,0 +1,355 @@
+[gd_scene load_steps=12 format=3 uid="uid://dkq1efvxpkd0g"]
+
+[ext_resource type="Script" path="res://scripts/status_window.gd" id="1_g1rlx"]
+[ext_resource type="Texture2D" uid="uid://bhn1pqq4v6et3" path="res://graphics/spritesheets/foresta_status_idle.png" id="2_l8ajl"]
+[ext_resource type="FontFile" uid="uid://ovhqspbit3ou" path="res://fonts/m6x11 Daniel LInssen.ttf" id="4_ycrm7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i27mx"]
+bg_color = Color(0.352941, 0.192157, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_dhaqo"]
+font = ExtResource("4_ycrm7")
+font_size = 32
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0.0901961, 0.0901961, 0.0901961, 0.768627)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oouip"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 3
+shadow_offset = Vector2(1, 1)
+anti_aliasing = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7psj"]
+atlas = ExtResource("2_l8ajl")
+region = Rect2(0, 0, 22, 34)
+
+[sub_resource type="LabelSettings" id="LabelSettings_i60gy"]
+font = ExtResource("4_ycrm7")
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2mkq"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 3.0
+shadow_size = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0pv20"]
+bg_color = Color(0.337255, 0.337255, 0.337255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 3.0
+shadow_size = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0d8sh"]
+bg_color = Color(0.337255, 0.337255, 0.337255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 3.0
+shadow_size = 1
+anti_aliasing = false
+
+[node name="StatusWindow" type="Control"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_g1rlx")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.5
+offset_top = -105.0
+offset_right = 112.5
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i27mx")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Status"
+label_settings = SubResource("LabelSettings_dhaqo")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="TextureRect" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 88)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_oouip")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/TextureRect"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ForrestaPicture" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/TextureRect/MarginContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_e7psj")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Strength" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Strength"]
+layout_mode = 2
+text = "Strength:"
+label_settings = SubResource("LabelSettings_i60gy")
+
+[node name="StrengthLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Strength"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="Agility" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Agility"]
+layout_mode = 2
+text = "Agility:"
+label_settings = SubResource("LabelSettings_i60gy")
+
+[node name="AgilityLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Agility"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="Endurance" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Endurance"]
+layout_mode = 2
+text = "Endurance:"
+label_settings = SubResource("LabelSettings_i60gy")
+
+[node name="EnduranceLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Endurance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="Constitution" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Constitution"]
+layout_mode = 2
+text = "Constitution:"
+label_settings = SubResource("LabelSettings_i60gy")
+
+[node name="ConstitutionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Constitution"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="HP" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/HP"]
+layout_mode = 2
+text = "Hit points:"
+label_settings = SubResource("LabelSettings_i60gy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/HP"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="HpLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/HP/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "20"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/HP/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "/"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="MaxHpLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/HP/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "20"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="Stamina" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Stamina"]
+layout_mode = 2
+text = "Stamina:"
+label_settings = SubResource("LabelSettings_i60gy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Stamina"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="StaminaLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Stamina/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "20"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Stamina/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "/"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="MaxStaminaLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Stamina/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "20"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="Mana" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Mana"]
+layout_mode = 2
+text = "Mana:"
+label_settings = SubResource("LabelSettings_i60gy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Mana"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="ManaLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Mana/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "20"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Mana/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "/"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="MaxManaLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Mana/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "20"
+label_settings = SubResource("LabelSettings_i60gy")
+horizontal_alignment = 2
+
+[node name="OK" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 18)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_colors/font_hover_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_fonts/font = ExtResource("4_ycrm7")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_j2mkq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0pv20")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0d8sh")
+text = "OK"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/OK" to="." method="_on_ok_pressed"]

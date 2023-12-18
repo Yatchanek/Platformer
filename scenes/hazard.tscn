@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://dj5brf012r8vg"]
+
+[ext_resource type="Script" path="res://scripts/hazard.gd" id="1_p4jja"]
+[ext_resource type="Texture2D" uid="uid://ddkk0ky8hoefx" path="res://graphics/environment/dust.png" id="2_8nklu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w22ik"]
+resource_local_to_scene = true
+size = Vector2(32, 8)
+
+[sub_resource type="Curve" id="Curve_nkwwe"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.730159, 0.621053), -1.92087, -1.92087, 0, 0, Vector2(1, 0.252632), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_podhu"]
+curve = SubResource("Curve_nkwwe")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_woia2"]
+resource_local_to_scene = true
+lifetime_randomness = 0.5
+emission_shape = 3
+emission_box_extents = Vector3(16, 4, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, -20, 0)
+angular_velocity_min = 25.0
+angular_velocity_max = 75.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_max = 180.0
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_podhu")
+hue_variation_min = 0.01
+hue_variation_max = 0.02
+turbulence_noise_strength = 20.0
+turbulence_noise_speed = Vector3(100, 0, 0)
+
+[node name="Hazard" type="Area2D"]
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("1_p4jja")
+size = Vector2i(4, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 12)
+shape = SubResource("RectangleShape2D_w22ik")
+
+[node name="IntervalTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(16, 12)
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_woia2")
+texture = ExtResource("2_8nklu")
+lifetime = 1.15
+explosiveness = 0.15
+randomness = 1.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="IntervalTimer" to="." method="_on_interval_timer_timeout"]

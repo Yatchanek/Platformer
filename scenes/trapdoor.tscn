@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://dm704cv141q0m"]
+
+[ext_resource type="Script" path="res://scripts/trapdoor.gd" id="1_arl1g"]
+[ext_resource type="Texture2D" uid="uid://bf14to45j7e52" path="res://graphics/environment/plank.png" id="2_udo4h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ivpxn"]
+size = Vector2(32, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fyyp5"]
+size = Vector2(32, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0h6v5"]
+size = Vector2(64, 6)
+
+[node name="Trapdoor" type="Node2D"]
+script = ExtResource("1_arl1g")
+
+[node name="LeftPlank" type="AnimatableBody2D" parent="."]
+position = Vector2(0, 3)
+
+[node name="LeftPlank" type="Sprite2D" parent="LeftPlank"]
+texture_filter = 1
+texture = ExtResource("2_udo4h")
+centered = false
+offset = Vector2(0, -3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftPlank"]
+position = Vector2(16, 0)
+shape = SubResource("RectangleShape2D_ivpxn")
+
+[node name="RightPlank" type="AnimatableBody2D" parent="."]
+position = Vector2(64, 3)
+
+[node name="RightPlank" type="Sprite2D" parent="RightPlank"]
+texture_filter = 1
+rotation = -3.14159
+texture = ExtResource("2_udo4h")
+centered = false
+offset = Vector2(0, -3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightPlank"]
+position = Vector2(-16, 0)
+shape = SubResource("RectangleShape2D_fyyp5")
+
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+position = Vector2(32, -3)
+shape = SubResource("RectangleShape2D_0h6v5")
+
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

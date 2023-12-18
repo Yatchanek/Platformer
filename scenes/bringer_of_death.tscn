@@ -1,0 +1,385 @@
+[gd_scene load_steps=24 format=3 uid="uid://dqqcmc062f1l5"]
+
+[ext_resource type="PackedScene" uid="uid://uq4e4sun6kp1" path="res://scenes/basic_enemy_template.tscn" id="1_mkr8b"]
+[ext_resource type="Script" path="res://scripts/enemies/bringer_of_death.gd" id="2_loqbg"]
+[ext_resource type="Texture2D" uid="uid://1fvibp3pw5pc" path="res://graphics/spritesheets/bringer_of_death_spritesheet.png" id="3_ymf87"]
+[ext_resource type="Script" path="res://scripts/enemies/bringer_idle_state.gd" id="4_83flb"]
+[ext_resource type="Script" path="res://scripts/enemies/bringer_walk_state.gd" id="5_xbh32"]
+[ext_resource type="Script" path="res://scripts/enemies/bringer_attack_state.gd" id="6_r1y3h"]
+[ext_resource type="Script" path="res://scripts/enemies/bringer_cast_state.gd" id="7_cs83p"]
+[ext_resource type="Script" path="res://scripts/enemies/bringer_hurt_state.gd" id="8_dpail"]
+[ext_resource type="Script" path="res://scripts/enemies/basic_die_state.gd" id="9_dq8mu"]
+[ext_resource type="Script" path="res://scripts/enemies/bringer_patrol_state.gd" id="10_npdtn"]
+[ext_resource type="Script" path="res://scripts/enemies/bringer_flee_state.gd" id="11_hwo3h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w6yyo"]
+resource_local_to_scene = true
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5icxb"]
+resource_local_to_scene = true
+size = Vector2(19, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l4lpa"]
+resource_local_to_scene = true
+size = Vector2(12, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6rpx"]
+size = Vector2(55.5, 52)
+
+[sub_resource type="Animation" id="Animation_5s0ij"]
+resource_name = "Attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/AttackBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_vsuoe"]
+resource_name = "Cast"
+length = 1.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [39, 40, 41, 42, 43, 44, 45, 46, 45, 46, 45, 46, 47]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"cast_spell"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_1pnqy"]
+resource_name = "Die"
+length = 1.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [29, 30, 31, 32, 33, 34, 35, 36, 37, 38]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.95, 1.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Hurtbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_cinjb"]
+resource_name = "Hurt"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [26, 27, 28]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_v5edx"]
+resource_name = "Idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_neon6"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/AttackBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/Hurtbox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_t67pw"]
+resource_name = "Walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dpq32"]
+_data = {
+"Attack": SubResource("Animation_5s0ij"),
+"Cast": SubResource("Animation_vsuoe"),
+"Die": SubResource("Animation_1pnqy"),
+"Hurt": SubResource("Animation_cinjb"),
+"Idle": SubResource("Animation_v5edx"),
+"RESET": SubResource("Animation_neon6"),
+"Walk": SubResource("Animation_t67pw")
+}
+
+[node name="BringerOfDeath" instance=ExtResource("1_mkr8b")]
+collision_mask = 129
+script = ExtResource("2_loqbg")
+patrol_speed = 84
+chase_speed = 112
+flee_speed = 144
+SPEED = 112
+max_hp = 25
+min_safe_distance = 32.0
+max_overrun_distance = 80.0
+sprite_height = 60
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_w6yyo")
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+texture = ExtResource("3_ymf87")
+offset = Vector2(36, -46)
+flip_h = true
+hframes = 8
+vframes = 8
+
+[node name="GapDetector" parent="Pivot" index="1"]
+position = Vector2(24, -3)
+
+[node name="PlayerDetector" parent="Pivot" index="3"]
+position = Vector2(48, -22)
+target_position = Vector2(20, 0)
+
+[node name="BackGapDetector" type="RayCast2D" parent="Pivot" index="4"]
+position = Vector2(-24, -4)
+target_position = Vector2(0, 16)
+
+[node name="BackWallDetector" type="RayCast2D" parent="Pivot" index="5"]
+position = Vector2(0, -24)
+target_position = Vector2(-30, 0)
+
+[node name="AttackBox" parent="Pivot" index="6" node_paths=PackedStringArray("attacker")]
+attacker = NodePath("../..")
+
+[node name="CollisionShape2D" parent="Pivot/AttackBox" index="0"]
+position = Vector2(59.5, -15)
+shape = SubResource("RectangleShape2D_5icxb")
+
+[node name="CollisionShape2D" parent="Pivot/Hurtbox" index="0"]
+shape = SubResource("RectangleShape2D_l4lpa")
+
+[node name="ProximityAlert" type="Area2D" parent="Pivot" index="8"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Pivot/ProximityAlert" index="0"]
+position = Vector2(20.25, -26)
+shape = SubResource("RectangleShape2D_c6rpx")
+
+[node name="Eyes" type="Marker2D" parent="Pivot" index="9"]
+position = Vector2(7, -22)
+
+[node name="RayCast2D" type="RayCast2D" parent="Pivot/Eyes" index="0"]
+position = Vector2(-7, 0)
+exclude_parent = false
+target_position = Vector2(256, 0)
+collision_mask = 9
+
+[node name="RayCast2D2" type="RayCast2D" parent="Pivot/Eyes" index="1"]
+position = Vector2(-7, 9)
+exclude_parent = false
+target_position = Vector2(256, 0)
+collision_mask = 9
+
+[node name="FiniteStateMachine" parent="." index="2" node_paths=PackedStringArray("current_state")]
+current_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="FiniteStateMachine" index="0"]
+script = ExtResource("4_83flb")
+
+[node name="ChaseState" type="Node" parent="FiniteStateMachine" index="1"]
+script = ExtResource("5_xbh32")
+
+[node name="AttackState" type="Node" parent="FiniteStateMachine" index="2"]
+script = ExtResource("6_r1y3h")
+
+[node name="CastState" type="Node" parent="FiniteStateMachine" index="3"]
+script = ExtResource("7_cs83p")
+
+[node name="HurtState" type="Node" parent="FiniteStateMachine" index="4"]
+script = ExtResource("8_dpail")
+
+[node name="DieState" type="Node" parent="FiniteStateMachine" index="5"]
+script = ExtResource("9_dq8mu")
+
+[node name="PatrolState" type="Node" parent="FiniteStateMachine" index="6"]
+script = ExtResource("10_npdtn")
+
+[node name="FleeState" type="Node" parent="FiniteStateMachine" index="7"]
+script = ExtResource("11_hwo3h")
+
+[node name="RestTimer" parent="." index="3"]
+wait_time = 0.3
+
+[node name="CastSpellTimer" type="Timer" parent="." index="5"]
+wait_time = 3.0
+one_shot = true
+
+[node name="HurtTimer" type="Timer" parent="." index="6"]
+one_shot = true
+
+[node name="TargetLostTimer" type="Timer" parent="." index="7"]
+one_shot = true
+
+[node name="HealthBar" parent="." index="8"]
+offset_top = -69.0
+offset_bottom = -63.0
+
+[node name="VisibleOnScreenEnabler2D" parent="." index="9"]
+position = Vector2(-4.76837e-07, -10)
+scale = Vector2(3.2, 1)
+enable_mode = 1
+
+[node name="AnimationPlayer" parent="." index="10"]
+libraries = {
+"": SubResource("AnimationLibrary_dpq32")
+}
+
+[connection signal="body_entered" from="Pivot/ProximityAlert" to="." method="_on_proximity_alert_body_entered"]
+[connection signal="body_exited" from="Pivot/ProximityAlert" to="." method="_on_proximity_alert_body_exited"]
+[connection signal="timeout" from="CastSpellTimer" to="." method="_on_cast_spell_timer_timeout"]
+[connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
+[connection signal="timeout" from="TargetLostTimer" to="." method="_on_target_lost_timer_timeout"]
+
+[editable path="Pivot/AttackBox"]

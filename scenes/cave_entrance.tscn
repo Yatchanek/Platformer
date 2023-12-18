@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://0kgtsybtxged"]
+
+[ext_resource type="Script" path="res://scripts/cave_entrance.gd" id="1_p35ho"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e04sc"]
+resource_local_to_scene = true
+size = Vector2(16, 24)
+
+[node name="CaveEntrance" type="Area2D"]
+collision_mask = 8
+script = ExtResource("1_p35ho")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_e04sc")
+
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

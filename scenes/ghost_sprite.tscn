@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8c0cibo6mhb3"]
+
+[ext_resource type="Texture2D" uid="uid://1emvjsf601tx" path="res://graphics/spritesheets/forresta_spritesheet.png" id="1_k3eg0"]
+[ext_resource type="Script" path="res://scripts/forresta/ghost_sprite.gd" id="1_nxtlv"]
+
+[node name="GhostSprite" type="Sprite2D"]
+texture = ExtResource("1_k3eg0")
+offset = Vector2(9, -21)
+hframes = 6
+vframes = 18
+script = ExtResource("1_nxtlv")

@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpgfwrlulhia0"]
+
+[ext_resource type="Texture2D" uid="uid://b63xxd0peo11p" path="res://graphics/dud_fireball.png" id="1_bwiim"]
+[ext_resource type="Script" path="res://scripts/dud_fireball.gd" id="2_u6bai"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3r622"]
+atlas = ExtResource("1_bwiim")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ok5ks"]
+atlas = ExtResource("1_bwiim")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ye0dv"]
+atlas = ExtResource("1_bwiim")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cfivb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3r622")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok5ks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ye0dv")
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="DudFireball" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_cfivb")
+autoplay = "default"
+frame = 2
+frame_progress = 1.0
+script = ExtResource("2_u6bai")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

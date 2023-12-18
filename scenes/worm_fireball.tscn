@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://8ocgj3cwj5gp"]
+
+[ext_resource type="Script" path="res://scripts/enemies/worm_fireball.gd" id="1_0cdhv"]
+[ext_resource type="Texture2D" uid="uid://ctqjt21csem38" path="res://graphics/spritesheets/Move.png" id="2_vgckq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_887ot"]
+radius = 5.09902
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7inrx"]
+atlas = ExtResource("2_vgckq")
+region = Rect2(0, 0, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1ssv"]
+atlas = ExtResource("2_vgckq")
+region = Rect2(46, 0, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gp0c"]
+atlas = ExtResource("2_vgckq")
+region = Rect2(92, 0, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l570"]
+atlas = ExtResource("2_vgckq")
+region = Rect2(138, 0, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmuyn"]
+atlas = ExtResource("2_vgckq")
+region = Rect2(184, 0, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qix6q"]
+atlas = ExtResource("2_vgckq")
+region = Rect2(230, 0, 46, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fl08j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7inrx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1ssv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gp0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4l570")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmuyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qix6q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="WormFireball" type="Area2D"]
+collision_layer = 0
+collision_mask = 9
+script = ExtResource("1_0cdhv")
+is_exploding = true
+max_speed = 480.0
+acceleration = 480.0
+current_damage = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_887ot")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_fl08j")
+autoplay = "default"
+frame_progress = 0.155601
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

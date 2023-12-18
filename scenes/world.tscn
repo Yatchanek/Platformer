@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://de1dimrjln70w"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_8icas"]
+[ext_resource type="Material" uid="uid://c07h6q28t0nb1" path="res://resources/death_effect_material.tres" id="3_pn8k1"]
+[ext_resource type="PackedScene" uid="uid://col3falvg0fba" path="res://scenes/hud.tscn" id="17_2kgfc"]
+
+[node name="World" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_8icas")
+levels = Array[String](["res://scenes/tutorial.tscn", "res://scenes/level_1.tscn"])
+
+[node name="HUD" parent="." instance=ExtResource("17_2kgfc")]
+
+[node name="Control" parent="HUD" index="0"]
+mouse_filter = 2
+
+[node name="HBoxContainer" parent="HUD/Control" index="0"]
+mouse_filter = 2
+
+[node name="VBoxContainer" parent="HUD/Control/HBoxContainer" index="1"]
+mouse_filter = 2
+
+[node name="HealthBar" parent="HUD/Control/HBoxContainer/VBoxContainer" index="0"]
+mouse_filter = 2
+
+[node name="MainProgress" parent="HUD/Control/HBoxContainer/VBoxContainer/HealthBar" index="0"]
+mouse_filter = 2
+
+[node name="StaminaBar" parent="HUD/Control/HBoxContainer/VBoxContainer" index="1"]
+mouse_filter = 2
+
+[node name="MainProgress" parent="HUD/Control/HBoxContainer/VBoxContainer/StaminaBar" index="0"]
+mouse_filter = 2
+
+[node name="DeathEffect" type="GPUParticles2D" parent="."]
+position = Vector2(-288, 450)
+emitting = false
+amount = 512
+process_material = ExtResource("3_pn8k1")
+lifetime = 2.5
+one_shot = true
+visibility_rect = Rect2(0, 0, 0, 0)
+
+[connection signal="tree_entered" from="HUD/Control/Inventory" to="HUD/Control/Inventory" method="_on_tree_entered"]
+
+[editable path="HUD"]
+[editable path="HUD/Control/HBoxContainer/VBoxContainer/HealthBar"]
+[editable path="HUD/Control/HBoxContainer/VBoxContainer/StaminaBar"]
+[editable path="HUD/Control/HBoxContainer/VBoxContainer/ManaBar"]
+[editable path="HUD/Control/Inventory"]
+[editable path="HUD/Control/Inventory/VBoxContainer/MarginContainer/Background/MarginContainer2/InventorySlots/InventorySlot12"]

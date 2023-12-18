@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Potion" load_steps=2 format=3 uid="uid://dhmq3ajf5uuxx"]
+
+[ext_resource type="Script" path="res://scripts/pickable_effects/pickup.gd" id="1_2wehl"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_2wehl")
